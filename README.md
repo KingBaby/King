@@ -1,2 +1,0 @@
-# King
-pygame source code
