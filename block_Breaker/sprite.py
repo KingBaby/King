@@ -15,15 +15,16 @@ class Point(object):
     def __str__(self):
         return "<x:%d, y:%d>" % (self.x, self.y)
 
-class Mysprite(pygame.sprite.Sprite):
+class MySprite(pygame.sprite.Sprite):
     def __init__(self):
-        pygame.sprite.Sprite.__init__()
+        pygame.sprite.Sprite.__init__(self)
         self.master_image = None
         self.frame = 0
         self.old_frame = -1
         self.frame_width = 0
         self.frame_height = 0
         self.first_frame = 0
+        self.last_frame = 0
         self.last_time = 0
         self.columns = 0
         self.direction = 0
