@@ -78,7 +78,7 @@ def move_paddle():
             paddle.velocity.x = 0
     paddle.X += paddle.velocity.x
     if paddle.X < 0: paddle.X = 0
-    elif paddle.X > screen_width: pygame.X = screen_width - paddle.frame_width
+    elif paddle.X > screen_width: paddle.X = screen_width - paddle.frame_width
     
 def reset_ball():
     ball.velocity = Point(4.5, -7.0)
@@ -88,7 +88,7 @@ def move_ball():
     ball_group.update(ticks, 50)
     if waiting:
         ball.X = paddle.X + paddle.frame_width / 2.0
-        ball.Y = paddle.Y
+        ball.Y = paddle.Y + ball.frame_height
     ball.X += ball.velocity.x
     ball.Y += ball.velocity.y
     if ball.X < 0:
@@ -151,8 +151,8 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-        elif event.type == pygame.MOUSEMOTION:
-            movex, movey = event.rel
+      #  elif event.type == pygame.MOUSEMOTION:
+      #      movex, movey = event.rel
         elif event.type == pygame.MOUSEBUTTONUP:
             if waiting:
                 waiting = False
@@ -170,10 +170,10 @@ while True:
         move_ball()
         collision_ball_paddle()
         collision_ball_blocks()
-
+    screen.fill((40, 40, 40))
     block_group.draw(screen)
     ball_group.draw(screen)
     paddle_group.draw(screen)
 
     pygame.display.update()
-    screen.fill((40, 40, 40))
+    
