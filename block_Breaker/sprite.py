@@ -41,7 +41,7 @@ class Mysprite(pygame.sprite.Sprite):
     def _setpos(self, value): self.rect.topleft = value
     position = property(_getpos, _setpos)
 
-    def load(self, filename, width=0, height=0, columns=1):
+    def load(self, filename, width=0, height=0, columns=1):    # 为了与之前的代码兼容
         self.master_image = pygame.image.load(filename).convert_alpha()
         self.set_image(self.master_image, width, height, columns)
 
