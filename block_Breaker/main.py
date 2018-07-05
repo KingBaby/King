@@ -54,7 +54,7 @@ def game_init():
 
     paddle = MySprite()
     paddle.load("Images/paddle.png")
-    paddle.position = (screen_width + paddle.frame_width) / 2, screen_height - paddle.frame_height - 10
+    paddle.position = (screen_width + paddle.frame_width) / 3, screen_height - paddle.frame_height - 10
     paddle_group.add(paddle)
 
     ball = MySprite()
@@ -143,7 +143,7 @@ game_over = False
 waiting = True
 score = 0
 lives = 3
-level = 2
+level = 0
 load_level()
 
 while True:
@@ -174,6 +174,7 @@ while True:
         collision_ball_blocks()
     
     screen.fill((40, 40, 40))
+
     print_Text(font, 0, 0, "LEVEL: %d" % (level+1))
     print_Text(font, screen_width / 4, 0, "BALLS: %d" % lives)
     print_Text(font, screen_width / 2, 0, "SCORE: %d" % score)
@@ -181,6 +182,10 @@ while True:
     block_group.draw(screen)
     ball_group.draw(screen)
     paddle_group.draw(screen)
+    if game_over:
+        gameover_shadow = pygame.image.load("Images/GAMEOVER_shadow_800_600.png").convert_alpha()
+        screen.blit(gameover_shadow, (0, 0))
+        print_Text(font, screen_width/3, screen_height/2, "G A M E  O V E R")
 
     pygame.display.update()
     

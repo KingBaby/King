@@ -63,7 +63,7 @@ class MySprite(pygame.sprite.Sprite):
         if self.last_frame >= self.first_frame:
             if current_time > self.last_time + rate:
                 self.frame += 1
-                if self.frame > self.last_frame:
+                if self.frame > self.last_frame or self.frame < self.first_frame:
                     self.frame = self.first_frame
                 self.last_time = current_time
 
