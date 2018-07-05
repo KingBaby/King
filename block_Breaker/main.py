@@ -88,7 +88,7 @@ def move_ball():
     ball_group.update(ticks, 50)
     if waiting:
         ball.X = paddle.X + paddle.frame_width / 2.0
-        ball.Y = paddle.Y + ball.frame_height
+        ball.Y = paddle.Y - ball.frame_height
     ball.X += ball.velocity.x
     ball.Y += ball.velocity.y
     if ball.X < 0:
@@ -100,14 +100,16 @@ def move_ball():
     if ball.Y < 0:
         ball.Y = 0
         ball.velocity.y *= -1
-    elif ball.Y > screen_height - ball.frame_height:
-        ball.Y = screen_height - ball.frame_height
+    elif ball.Y > screen_height:
+        waiting = True
+        lives -= 1
+        if lives < 1: game_over = True
     
 def collision_ball_paddle():
     if pygame.sprite.collide_rect(ball, paddle):
         ball.velocity.y = -abs(ball.velocity.y)
-        bx = ball.X + 8
-        by = ball.Y + 8
+        bx = ball.X + ball.frame_width / 2
+        by = ball.Y + ball.frame_height / 2
         px = paddle.X + paddle.frame_width / 2
         py = paddle.Y + paddle.frame_height / 2
         if bx < px:
@@ -141,7 +143,7 @@ game_over = False
 waiting = True
 score = 0
 lives = 3
-level = 0
+level = 2
 load_level()
 
 while True:
@@ -151,8 +153,8 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-      #  elif event.type == pygame.MOUSEMOTION:
-      #      movex, movey = event.rel
+        elif event.type == pygame.MOUSEMOTION:
+            movex, movey = event.rel
         elif event.type == pygame.MOUSEBUTTONUP:
             if waiting:
                 waiting = False
@@ -170,7 +172,12 @@ while True:
         move_ball()
         collision_ball_paddle()
         collision_ball_blocks()
+    
     screen.fill((40, 40, 40))
+    print_Text(font, 0, 0, "LEVEL: %d" % (level+1))
+    print_Text(font, screen_width / 4, 0, "BALLS: %d" % lives)
+    print_Text(font, screen_width / 2, 0, "SCORE: %d" % score)
+
     block_group.draw(screen)
     ball_group.draw(screen)
     paddle_group.draw(screen)

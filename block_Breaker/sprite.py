@@ -60,7 +60,7 @@ class MySprite(pygame.sprite.Sprite):
         self.columns = columns
 
     def update(self, current_time, rate = 30):
-        if self.last_frame > self.first_frame:
+        if self.last_frame >= self.first_frame:
             if current_time > self.last_time + rate:
                 self.frame += 1
                 if self.frame > self.last_frame:
