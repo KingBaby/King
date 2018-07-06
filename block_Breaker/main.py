@@ -2,7 +2,13 @@
 
 import pygame, sys
 from levels import levels
-from sprite import *
+from sprite import MySprite, Point, print_Text
+
+game_over = False
+waiting = True
+score = 0
+lives = 100
+level = 0
 
 def goto_next_level():
     global level
@@ -108,8 +114,8 @@ def move_ball():
 def collision_ball_paddle():
     if pygame.sprite.collide_rect(ball, paddle):
         ball.velocity.y = -abs(ball.velocity.y)
-        bx = ball.X + ball.frame_width / 2
-        by = ball.Y + ball.frame_height / 2
+        bx = ball.X
+        by = ball.Y
         px = paddle.X + paddle.frame_width / 2
         py = paddle.Y + paddle.frame_height / 2
         if bx < px:
@@ -139,11 +145,6 @@ def collision_ball_blocks():
             ball.velocity.y *= -1
 
 game_init()
-game_over = False
-waiting = True
-score = 0
-lives = 3
-level = 0
 load_level()
 
 while True:
@@ -154,7 +155,7 @@ while True:
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.MOUSEMOTION:
-            movex, movey = event.rel
+            movex, movey = 0, 0#event.rel
         elif event.type == pygame.MOUSEBUTTONUP:
             if waiting:
                 waiting = False
